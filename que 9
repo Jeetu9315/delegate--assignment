@@ -1,0 +1,44 @@
+using System;
+
+class Program
+{
+    static int Add(int a, int b)
+    {
+        return a + b;
+    }
+
+    static int Multiply(int a, int b)
+    {
+        return a * b;
+    }
+
+    static int Subtract(int a, int b)
+    {
+        return a - b;
+    }
+
+    static void Main()
+    {
+        Func<int, int, int> func = Add;
+
+        Console.WriteLine("Addition: " + func(10, 20));
+
+        func = Multiply;
+
+        Console.WriteLine("Multiplication: " + func(10, 20));
+
+        Func<int, int, int> multicast = Add;
+        multicast += Multiply;
+        multicast += Subtract;
+
+        Delegate[] methods = multicast.GetInvocationList();
+
+        Console.WriteLine("Multicast Func Results:");
+
+        foreach (Func<int, int, int> method in methods)
+        {
+            int result = method(10, 5);
+            Console.WriteLine(method.Method.Name + ": " + result);
+        }
+    }
+}
