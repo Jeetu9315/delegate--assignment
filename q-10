@@ -1,0 +1,36 @@
+using System;
+
+class Program
+{
+    static bool IsEven(int number)
+    {
+        return number % 2 == 0;
+    }
+
+    static bool IsPositive(int number)
+    {
+        return number > 0;
+    }
+
+    static bool IsGreaterThan100(int number)
+    {
+        return number > 100;
+    }
+
+    static void Main()
+    {
+        Predicate<int> predicate = IsEven;
+        predicate += IsPositive;
+        predicate += IsGreaterThan100;
+
+        int number = 120;
+
+        Delegate[] methods = predicate.GetInvocationList();
+
+        foreach (Predicate<int> method in methods)
+        {
+            bool result = method(number);
+            Console.WriteLine(method.Method.Name + ": " + result);
+        }
+    }
+}
