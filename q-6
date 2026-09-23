@@ -1,0 +1,31 @@
+using System;
+
+delegate void NotificationDelegate(string message);
+
+class Program
+{
+    static void SendEmail(string message)
+    {
+        Console.WriteLine("Email: " + message);
+    }
+
+    static void SendSMS(string message)
+    {
+        Console.WriteLine("SMS: " + message);
+    }
+
+    static void SendWhatsApp(string message)
+    {
+        Console.WriteLine("WhatsApp: " + message);
+    }
+
+    static void Main()
+    {
+        NotificationDelegate notification = SendEmail;
+
+        notification += SendSMS;
+        notification += SendWhatsApp;
+
+        notification("Your order has been shipped.");
+    }
+}
